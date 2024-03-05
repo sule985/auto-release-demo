@@ -1,0 +1,21 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  create:
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    steps:
+      - name: Get the sources
+        uses: actions/checkout@v4
+      - name: Create a release draft for a version tag
+          id: create-release-draft
+        uses: ./
+      - name: Print the url of the release draft
+        run: echo ${{ steps.create-release-draft.outputs.release-url }}
